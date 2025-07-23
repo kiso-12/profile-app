@@ -1,87 +1,128 @@
-// DOM要素の取得
-// JavaScriptからHTML要素にアクセスするために、各要素のIDを使って参照を取得します。
-const imageURLInput = document.getElementById('imageURL'); // 画像URL入力欄
-const nameInput = document.getElementById('name');         // 氏名入力欄
-const introductionInput = document.getElementById('introduction'); // 自己紹介入力欄
-const saveProfileBtn = document.getElementById('saveProfileBtn'); // 保存ボタン
+// DOM要素の取得 (変更あり: resetImageBtn を追加)
+const imageUploadInput = document.getElementById('imageUpload');
+const nameInput = document.getElementById('name');
+const introductionInput = document.getElementById('introduction');
+const saveProfileBtn = document.getElementById('saveProfileBtn');
+const resetImageBtn = document.getElementById('resetImageBtn'); // リセットボタンを追加
 
-const profileImagePreview = document.getElementById('profileImagePreview'); // プロフィール画像プレビュー
-const profileNamePreview = document.getElementById('profileNamePreview');   // 氏名プレビュー
-const profileIntroductionPreview = document.getElementById('profileIntroductionPreview'); // 自己紹介プレビュー
+const profileImagePreview = document.getElementById('profileImagePreview');
+const profileNamePreview = document.getElementById('profileNamePreview');
+const profileIntroductionPreview = document.getElementById('profileIntroductionPreview');
+
+// デフォルトのプレースホルダー画像URL
+const DEFAULT_IMAGE_SRC = 'https://via.placeholder.com/180/E0E0E0/FFFFFF?text=No+Image';
 
 // プロフィールを読み込み、表示する関数
-// アプリが読み込まれたとき、または保存ボタンが押されたときに実行されます。
 function loadProfile() {
-    // ローカルストレージから保存されたプロフィールデータを取得します。
-    // キー 'myProfile' で保存されており、JSON文字列として取得されます。
     const savedProfileJSON = localStorage.getItem('myProfile');
 
-    // データが存在するかどうかを確認します。
     if (savedProfileJSON) {
-        // JSON文字列をJavaScriptのオブジェクトに変換します。
         const savedProfile = JSON.parse(savedProfileJSON);
 
-        // 取得したデータを入力フィールドに設定します。
-        imageURLInput.value = savedProfile.imageURL || ''; // データがない場合は空文字列
+        if (savedProfile.fileData) {
+            profileImagePreview.src = savedProfile.fileData;
+        } else {
+            profileImagePreview.src = DEFAULT_IMAGE_SRC; // デフォルト画像を使用
+        }
+
         nameInput.value = savedProfile.name || '';
         introductionInput.value = savedProfile.introduction || '';
 
-        // 取得したデータをプレビューエリアに表示します。
-        // データがない場合は初期値または空文字列を設定します。
-        profileImagePreview.src = savedProfile.imageURL || 'https://via.placeholder.com/150';
         profileNamePreview.textContent = savedProfile.name || 'あなたの氏名';
         profileIntroductionPreview.textContent = savedProfile.introduction || 'ここに自己紹介文が表示されます。';
     } else {
-        // 保存されたデータがない場合、プレビューを初期状態に戻します。
-        profileImagePreview.src = 'https://via.placeholder.com/150';
+        profileImagePreview.src = DEFAULT_IMAGE_SRC; // デフォルト画像を使用
         profileNamePreview.textContent = 'あなたの氏名';
         profileIntroductionPreview.textContent = 'ここに自己紹介文が表示されます。';
     }
 }
 
 // プロフィールを保存する関数
-// 保存ボタンがクリックされたときに実行されます。
-function saveProfile() {
-    // 各入力フィールドから現在の値を取得します。
+async function saveProfile() {
     const profile = {
-        imageURL: imageURLInput.value,
         name: nameInput.value,
-        introduction: introductionInput.value
+        introduction: introductionInput.value,
+        fileData: profileImagePreview.src // 現在プレビューに表示されている画像データを保存
     };
 
-    // JavaScriptオブジェクトをJSON文字列に変換します。
-    // ローカルストレージには文字列しか保存できないため、この変換が必要です。
+    if (imageUploadInput.files && imageUploadInput.files[0]) {
+        try {
+            profile.fileData = await readFileAsBase64(imageUploadInput.files[0]);
+        } catch (error) {
+            console.error("画像の読み込みに失敗しました:", error);
+            alert("画像のアップロードに失敗しました。");
+            return;
+        }
+    } else if (profileImagePreview.src === DEFAULT_IMAGE_SRC) {
+        // 画像がデフォルトに戻されている場合、fileDataをnullまたは空にする
+        profile.fileData = null;
+    }
+    // その他の場合は、現在の profileImagePreview.src (Base64データまたは外部URL) をそのまま使用
+
     const profileJSON = JSON.stringify(profile);
 
-    // JSON文字列を 'myProfile' というキーでローカルストレージに保存します。
-    localStorage.setItem('myProfile', profileJSON);
+    try {
+        localStorage.setItem('myProfile', profileJSON);
+        loadProfile();
+        alert('プロフィールが保存されました！');
+    } catch (e) {
+        if (e.name === 'QuotaExceededError') {
+            alert('保存できる容量を超えました。小さい画像を使用してください。');
+        } else {
+            alert('プロフィールの保存に失敗しました。');
+        }
+        console.error("保存エラー:", e);
+    }
+}
 
-    // 保存後、プレビューを更新するために loadProfile 関数を呼び出します。
-    loadProfile();
+// ファイルをBase64形式で読み込む非同期関数 (変更なし)
+function readFileAsBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
 
-    alert('プロフィールが保存されました！'); // ユーザーに保存完了を通知
+        reader.onload = () => {
+            resolve(reader.result);
+        };
+
+        reader.onerror = (error) => {
+            reject(error);
+        };
+
+        reader.readAsDataURL(file);
+    });
 }
 
 // リアルタイムプレビューを更新する関数
-// 入力フィールドの値が変更されるたびに実行されます。
 function updatePreview() {
-    // 各入力フィールドの現在の値を取得し、直接プレビュー要素に設定します。
-    // 画像URLが空の場合はプレースホルダー画像を表示します。
-    profileImagePreview.src = imageURLInput.value || 'https://via.placeholder.com/150';
+    if (imageUploadInput.files && imageUploadInput.files[0]) {
+        const file = imageUploadInput.files[0];
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            profileImagePreview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        profileImagePreview.src = DEFAULT_IMAGE_SRC; // デフォルト画像に戻す
+    }
+
     profileNamePreview.textContent = nameInput.value || 'あなたの氏名';
     profileIntroductionPreview.textContent = introductionInput.value || 'ここに自己紹介文が表示されます。';
 }
 
-// イベントリスナーの設定
-// 特定のイベントが発生したときに、上記で定義した関数を実行するように設定します。
+// 画像をリセットする関数 (新規追加)
+function resetImage() {
+    imageUploadInput.value = ''; // ファイル選択をクリア
+    profileImagePreview.src = DEFAULT_IMAGE_SRC; // プレビュー画像をデフォルトに戻す
+    // ※注意：この時点ではローカルストレージには保存されない。保存するにはsaveProfileBtnを押す必要がある。
+}
 
-// 1. ページの読み込みが完了したら、保存されているプロフィールを読み込む
+
+// イベントリスナーの設定 (変更あり: resetImageBtn のイベントを追加)
 window.addEventListener('load', loadProfile);
-
-// 2. 保存ボタンがクリックされたら、プロフィールを保存する
 saveProfileBtn.addEventListener('click', saveProfile);
-
-// 3. 各入力フィールドの値が変更されるたびに、プレビューを更新する
-imageURLInput.addEventListener('input', updatePreview);
+imageUploadInput.addEventListener('change', updatePreview);
 nameInput.addEventListener('input', updatePreview);
 introductionInput.addEventListener('input', updatePreview);
+resetImageBtn.addEventListener('click', resetImage); // リセットボタンのクリックイベントを追加
