@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyProfile Lite</title>
+    <title>MyProfile Enhanced</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>MyProfile Lite</h1>
+        <h1>MyProfile Enhanced</h1>
 
-        <div class="input-section">
+        <div class="input-section card">
             <h2>プロフィール入力</h2>
             <div class="form-group">
-                <label for="imageURL">画像URL:</label>
-                <input type="text" id="imageURL" placeholder="プロフィール画像のURLを入力">
+                <label for="imageUpload">プロフィール画像:</label>
+                <div class="image-upload-controls">
+                    <input type="file" id="imageUpload" accept="image/*">
+                    <button id="resetImageBtn" class="secondary-btn">画像をリセット</button>
+                </div>
             </div>
             <div class="form-group">
                 <label for="name">氏名:</label>
@@ -29,10 +33,10 @@
 
         <hr>
 
-        <div class="preview-section">
+        <div class="preview-section card">
             <h2>プロフィールプレビュー</h2>
             <div class="profile-card">
-                <img id="profileImagePreview" src="https://via.placeholder.com/150" alt="プロフィール画像">
+                <img id="profileImagePreview" src="https://via.placeholder.com/180/E0E0E0/FFFFFF?text=No+Image" alt="プロフィール画像">
                 <h3 id="profileNamePreview">あなたの氏名</h3>
                 <p id="profileIntroductionPreview">ここに自己紹介文が表示されます。</p>
             </div>
