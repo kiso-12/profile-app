@@ -1,252 +1,258 @@
-/* 基本設定 */
+/* ==================== 基本設定 ==================== */
 body {
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-    margin: 0;
-    padding: 40px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    color: #333;
+    font-family: 'Roboto', sans-serif; /* Google Fontsで読み込んだRobotoを優先的に使用 */
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%); /* ページ全体の背景にグラデーションを適用 */
+    margin: 0; /* デフォルトのマージンをリセット */
+    padding: 40px 20px; /* 上下左右のパディングを設定 */
+    display: flex; /* flexboxを使ってコンテンツを配置 */
+    justify-content: center; /* 水平方向の中央揃え */
+    align-items: center; /* 垂直方向の中央揃え */
+    min-height: 100vh; /* 画面の高さ全体を使う */
+    color: #333; /* 基本の文字色を設定 */
 }
 
-/* コンテナ */
+/* ==================== コンテナ ==================== */
 .container {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    max-width: 700px;
-    width: 100%;
-    box-sizing: border-box;
+    background-color: #ffffff; /* コンテナの背景色を白に設定 */
+    padding: 40px; /* 内側の余白 */
+    border-radius: 12px; /* 角丸の半径を大きくする */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* 強めの影を設定し、立体感を出す */
+    max-width: 700px; /* コンテナの最大幅 */
+    width: 100%; /* 親要素の幅いっぱいに広がる */
+    box-sizing: border-box; /* パディングとボーダーをwidth計算に含める */
 }
 
-/* 見出し */
+/* ==================== 見出し ==================== */
 h1 {
-    font-size: 2.8em;
-    color: #2c3e50;
-    text-align: center;
-    margin-bottom: 30px;
-    letter-spacing: 1px;
+    font-size: 2.8em; /* メインタイトルのフォントサイズ */
+    color: #2c3e50; /* タイトルの文字色 */
+    text-align: center; /* 中央揃え */
+    margin-bottom: 30px; /* 下部の余白 */
+    letter-spacing: 1px; /* 字間を少し開ける */
 }
 
 h2 {
-    font-size: 1.8em;
-    color: #34495e;
-    text-align: center;
-    margin-bottom: 25px;
-    border-bottom: 2px solid #e0e0e0;
-    padding-bottom: 10px;
+    font-size: 1.8em; /* サブタイトルのフォントサイズ */
+    color: #34495e; /* サブタイトルの文字色 */
+    text-align: center; /* 中央揃え */
+    margin-bottom: 25px; /* 下部の余白 */
+    border-bottom: 2px solid #e0e0e0; /* 下線を追加 */
+    padding-bottom: 10px; /* 下線とテキストの間に余白 */
 }
 
-/* カードスタイル */
+/* ==================== カードスタイル ==================== */
 .card {
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 30px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9; /* カードの背景色を少し薄いグレーに設定 */
+    border-radius: 10px; /* カードの角を丸くする */
+    padding: 30px; /* カードの内側の余白 */
+    margin-bottom: 30px; /* カードの下部の余白 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* カードに軽い影を設定 */
 }
 
-/* フォームグループ */
+/* ==================== フォーム要素 ==================== */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* フォームグループ（ラベルと入力欄のセット）の下部余白 */
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #444;
-    font-size: 1.1em;
+    display: block; /* ラベルをブロック要素にし、改行させる */
+    margin-bottom: 8px; /* ラベルと入力欄の間の余白 */
+    font-weight: 500; /* フォントの太さを設定 */
+    color: #444; /* ラベルの文字色 */
+    font-size: 1.1em; /* ラベルのフォントサイズ */
 }
 
-/* 画像アップロードコントロールのレイアウト */
+/* 画像アップロードコントロールのレイアウト（ファイル選択とリセットボタン） */
 .image-upload-controls {
-    display: flex; /* Flexboxで子要素を横並びに */
-    gap: 10px; /* 子要素間のスペース */
+    display: flex; /* flexboxを使って子要素（input[type="file"]とbutton）を横並びに */
+    gap: 10px; /* 子要素間の隙間 */
     align-items: center; /* 垂直方向の中央揃え */
-    flex-wrap: wrap; /* 小画面で折り返す */
+    flex-wrap: wrap; /* 画面が狭くなったら折り返す */
 }
 
+/* テキスト入力、テキストエリア、ファイル入力の共通スタイル */
+.form-group input[type="text"],
+.form-group textarea,
 .form-group input[type="file"] {
+    width: calc(100% - 24px); /* 親要素の幅からパディングとボーダーを引いた幅 */
+    padding: 12px; /* 内側の余白 */
+    border: 1px solid #c0c0c0; /* 枠線の色と太さ */
+    border-radius: 6px; /* 角丸の半径 */
+    font-size: 1em; /* フォントサイズ */
+    /* ホバー時とフォーカス時の変化を滑らかにする */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* パディングとボーダーをwidth計算に含める */
+}
+
+/* ファイル入力フィールドの背景色 */
+.form-group input[type="file"] {
+    background-color: #fff;
     flex-grow: 1; /* 利用可能なスペースを埋めるように伸びる */
     min-width: 150px; /* 最小幅を設定 */
-    padding: 10px; /* パディングを調整 */
-    border: 1px solid #c0c0c0;
-    border-radius: 6px;
-    font-size: 1em;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box;
-    background-color: #fff; /* ファイル入力の背景色 */
+    padding: 10px; /* ファイル入力のパディングは少し調整 */
 }
 
-.form-group input[type="text"],
-.form-group textarea {
-    width: calc(100% - 24px);
-    padding: 12px;
-    border: 1px solid #c0c0c0;
-    border-radius: 6px;
-    font-size: 1em;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box;
-}
 
+/* 入力フィールドがフォーカスされたときのスタイル */
 .form-group input[type="text"]:focus,
 .form-group textarea:focus,
-.form-group input[type="file"]:focus { /* ファイル入力にもフォーカススタイル適用 */
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-    outline: none;
+.form-group input[type="file"]:focus {
+    border-color: #007bff; /* フォーカス時に枠線の色を変更 */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* フォーカス時に影を追加 */
+    outline: none; /* ブラウザのデフォルトのアウトラインを消す */
 }
 
+/* テキストエリア固有のスタイル */
 .form-group textarea {
-    resize: vertical;
-    min-height: 120px;
+    resize: vertical; /* 垂直方向のみリサイズ可能に */
+    min-height: 120px; /* 最小の高さ */
 }
 
-/* メインボタン */
+/* ==================== ボタン ==================== */
+/* メインボタン（保存ボタン）のスタイル */
 button {
-    display: block;
-    width: 100%;
-    padding: 15px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1em;
-    font-weight: 700;
-    cursor: pointer;
+    display: block; /* ボタンをブロック要素にし、改行させる */
+    width: 100%; /* 親要素の幅いっぱいに広がる */
+    padding: 15px; /* 内側の余白 */
+    background-color: #28a745; /* 保存ボタンの背景色（緑系） */
+    color: white; /* 文字色 */
+    border: none; /* 枠線なし */
+    border-radius: 8px; /* 角丸の半径 */
+    font-size: 1.1em; /* フォントサイズ */
+    font-weight: 700; /* フォントを太くする */
+    cursor: pointer; /* マウスカーソルをポインターにする */
+    /* ホバー時とクリック時の変化を滑らかにする */
     transition: background-color 0.3s ease, transform 0.2s ease;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.5px; /* 字間を設定 */
 }
 
+/* メインボタンにマウスが乗ったときのスタイル */
 button:hover {
-    background-color: #218838;
-    transform: translateY(-2px);
+    background-color: #218838; /* ホバー時に背景色を少し濃くする */
+    transform: translateY(-2px); /* 少し上に浮き上がるアニメーション */
 }
 
+/* メインボタンがクリックされたときのスタイル */
 button:active {
-    transform: translateY(0);
+    transform: translateY(0); /* クリック時に元の位置に戻る */
 }
 
-/* セカンダリボタン (リセットボタン用) */
+/* セカンダリボタン（リセットボタン）のスタイル */
 .secondary-btn {
-    background-color: #6c757d; /* グレー系の色 */
-    color: white;
-    padding: 10px 15px; /* メインボタンより小さく */
-    font-size: 0.9em;
-    font-weight: 500;
-    border-radius: 6px;
-    /* width: auto; */ /* flex-grow: 0; と組み合わせる */
-    flex-shrink: 0; /* 縮まないように */
+    background-color: #6c757d; /* 背景色をグレー系にする */
+    color: white; /* 文字色 */
+    padding: 10px 15px; /* メインボタンより小さめのパディング */
+    font-size: 0.9em; /* メインボタンより小さめのフォントサイズ */
+    font-weight: 500; /* フォントの太さ */
+    border-radius: 6px; /* 角丸の半径 */
+    flex-shrink: 0; /* flexbox内で縮まないようにする */
 }
 
+/* セカンダリボタンにマウスが乗ったときのスタイル */
 .secondary-btn:hover {
-    background-color: #5a6268;
-    transform: translateY(-1px); /* 少し浮く */
+    background-color: #5a6268; /* ホバー時に背景色を少し濃くする */
+    transform: translateY(-1px); /* 少し上に浮き上がるアニメーション */
 }
 
+/* セカンダリボタンがクリックされたときのスタイル */
 .secondary-btn:active {
-    transform: translateY(0);
+    transform: translateY(0); /* クリック時に元の位置に戻る */
 }
 
-
-/* 区切り線 */
+/* ==================== 区切り線 ==================== */
 hr {
-    border: 0;
-    border-top: 1px solid #e0e0e0;
-    margin: 50px 0;
+    border: 0; /* デフォルトのボーダーを削除 */
+    border-top: 1px solid #e0e0e0; /* 上部に細い線を追加 */
+    margin: 50px 0; /* 上下余白を設定 */
 }
 
-/* プロフィールカード */
+/* ==================== プロフィールカード ==================== */
 .profile-card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 25px;
-    text-align: center;
-    background-color: #ffffff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    border: 1px solid #ddd; /* カードの枠線 */
+    border-radius: 10px; /* 角丸の半径 */
+    padding: 25px; /* 内側の余白 */
+    text-align: center; /* テキストを中央揃え */
+    background-color: #ffffff; /* 背景色を白に設定 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* 軽い影を設定 */
+    display: flex; /* flexboxを使って子要素を配置 */
+    flex-direction: column; /* 子要素を縦並びにする */
+    align-items: center; /* 垂直方向の中央揃え */
 }
 
 .profile-card img {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #007bff;
-    margin-bottom: 20px;
-    box-shadow: 0 0 0 6px rgba(0, 123, 255, 0.1);
+    width: 180px; /* 画像の幅 */
+    height: 180px; /* 画像の高さ */
+    border-radius: 50%; /* 画像を円形にクリップ */
+    object-fit: cover; /* 画像のアスペクト比を維持しつつ、指定された領域を埋める */
+    border: 4px solid #007bff; /* 青い枠線 */
+    margin-bottom: 20px; /* 画像の下部の余白 */
+    box-shadow: 0 0 0 6px rgba(0, 123, 255, 0.1); /* 外側に軽い影 */
 }
 
 .profile-card h3 {
-    font-size: 2em;
-    color: #2c3e50;
-    margin-bottom: 12px;
-    font-weight: 700;
+    font-size: 2em; /* 氏名のフォントサイズ */
+    color: #2c3e50; /* 氏名の文字色 */
+    margin-bottom: 12px; /* 下部の余白 */
+    font-weight: 700; /* フォントを太くする */
 }
 
 .profile-card p {
-    font-size: 1.1em;
-    color: #555;
-    line-height: 1.7;
-    white-space: pre-wrap;
-    text-align: left;
-    max-width: 500px;
+    font-size: 1.1em; /* 自己紹介文のフォントサイズ */
+    color: #555; /* 文字色 */
+    line-height: 1.7; /* 行の高さ */
+    white-space: pre-wrap; /* 改行を保持して表示する */
+    text-align: left; /* 自己紹介文を左揃えにする */
+    max-width: 500px; /* 長文の場合の最大幅 */
 }
 
-/* レスポンシブデザイン */
-@media (max-width: 768px) {
+/* ==================== レスポンシブデザイン（画面幅による調整） ==================== */
+@media (max-width: 768px) { /* 画面幅が768px以下の場合に適用されるスタイル */
     body {
-        padding: 20px 15px;
+        padding: 20px 15px; /* 小画面でのパディングを調整 */
     }
 
     .container {
-        padding: 25px;
+        padding: 25px; /* 小画面でのコンテナのパディングを調整 */
     }
 
     h1 {
-        font-size: 2.2em;
+        font-size: 2.2em; /* 小画面でのh1フォントサイズ */
     }
 
     h2 {
-        font-size: 1.5em;
+        font-size: 1.5em; /* 小画面でのh2フォントサイズ */
     }
 
     .card {
-        padding: 20px;
+        padding: 20px; /* 小画面でのカードのパディング */
     }
 
     /* 小画面では画像アップロードコントロールを縦並びにする */
     .image-upload-controls {
-        flex-direction: column;
-        gap: 15px;
+        flex-direction: column; /* 子要素を縦並びにする */
+        gap: 15px; /* 縦方向の隙間 */
     }
 
     .form-group input[type="file"] {
-        width: 100%; /* 全幅に */
-        min-width: unset;
+        width: 100%; /* ファイル入力フィールドを全幅にする */
+        min-width: unset; /* 最小幅の指定を解除 */
     }
 
     .secondary-btn {
-        width: 100%; /* 小画面ではボタンも全幅に */
+        width: 100%; /* 小画面ではセカンダリボタンも全幅にする */
     }
 
     .profile-card img {
-        width: 120px;
-        height: 120px;
+        width: 120px; /* 小画面での画像サイズを小さくする */
+        height: 120px; /* 小画面での画像サイズを小さくする */
     }
 
     .profile-card h3 {
-        font-size: 1.6em;
+        font-size: 1.6em; /* 小画面での氏名のフォントサイズ */
     }
 
     .profile-card p {
-        font-size: 1em;
-        text-align: center;
+        font-size: 1em; /* 小画面での自己紹介文のフォントサイズ */
+        text-align: center; /* 小画面では自己紹介文を中央揃えにする */
     }
 }
