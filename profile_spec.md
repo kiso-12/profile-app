@@ -92,7 +92,7 @@
 
 ## 4. アプリの機能フロー (Mermaid記法)
 
-ここでは、MyProfile Enhancedアプリの主要な機能がどのように連携しているかを、Mermaid記法で図示します。
+ここでは、アプリの主要な機能がどのように連携しているかを、Mermaid記法で図示します。
 
 ```mermaid
 graph TD
